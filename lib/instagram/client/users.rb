@@ -157,10 +157,11 @@ module Instagram
     #   If getting this data of a protected user, you must authenticate (and be allowed to see that user).
     # @rate_limited true
     def user_recent_media(*args)
+      return_data_only args.last.is_a?(Boolean) ? args.pop : true
       options = args.last.is_a?(Hash) ? args.pop : {}
       id = args.first || "self"
       response = get("users/#{id}/media/recent", options)
-      response["data"]
+      return_data_only ? response["data"] : response
     end
 
     # Returns a list of media items liked by the current user
